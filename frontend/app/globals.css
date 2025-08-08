@@ -1,0 +1,318 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 237 77% 60%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 237 77% 60%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 237 77% 60%;
+    --primary-foreground: 222.2 84% 4.9%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 237 77% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+  
+  .glass-dark {
+    @apply bg-black/10 backdrop-blur-md border border-black/20;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent;
+  }
+  
+  .gradient-bg {
+    @apply bg-gradient-to-br from-primary-500 via-primary-600 to-primary-700;
+  }
+  
+  .animated-border {
+    @apply relative overflow-hidden;
+  }
+  
+  .animated-border::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-primary-500 via-secondary-500 to-primary-500 opacity-0 transition-opacity duration-300;
+    background-size: 200% 100%;
+    animation: border-flow 3s linear infinite;
+  }
+  
+  .animated-border:hover::before {
+    @apply opacity-100;
+  }
+  
+  @keyframes border-flow {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  
+  .card-hover {
+    @apply transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-primary-500/20;
+  }
+  
+  .floating {
+    animation: floating 3s ease-in-out infinite;
+  }
+  
+  @keyframes floating {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+  
+  @keyframes pulse-glow {
+    from { box-shadow: 0 0 20px rgba(124, 106, 242, 0.3); }
+    to { box-shadow: 0 0 30px rgba(124, 106, 242, 0.6); }
+  }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-400 dark:bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500 dark:bg-gray-500;
+}
+
+/* Custom animations for loading states */
+.skeleton {
+  @apply animate-pulse bg-gray-300 dark:bg-gray-700 rounded;
+}
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Status indicators */
+.status-safe {
+  @apply bg-green-100 text-green-800 border-green-200;
+}
+
+.status-warning {
+  @apply bg-yellow-100 text-yellow-800 border-yellow-200;
+}
+
+.status-danger {
+  @apply bg-red-100 text-red-800 border-red-200;
+}
+
+.status-info {
+  @apply bg-blue-100 text-blue-800 border-blue-200;
+}
+
+/* Dark mode status indicators */
+.dark .status-safe {
+  @apply bg-green-900/20 text-green-400 border-green-800;
+}
+
+.dark .status-warning {
+  @apply bg-yellow-900/20 text-yellow-400 border-yellow-800;
+}
+
+.dark .status-danger {
+  @apply bg-red-900/20 text-red-400 border-red-800;
+}
+
+.dark .status-info {
+  @apply bg-blue-900/20 text-blue-400 border-blue-800;
+}
+
+/* Progress bars */
+.progress-bar {
+  @apply h-2 bg-gray-200 rounded-full overflow-hidden;
+}
+
+.progress-fill {
+  @apply h-full transition-all duration-500 ease-out;
+}
+
+.progress-safe { @apply bg-green-500; }
+.progress-warning { @apply bg-yellow-500; }
+.progress-danger { @apply bg-red-500; }
+
+/* Charts and data visualization */
+.chart-container {
+  @apply relative w-full h-64 p-4 bg-white dark:bg-gray-800 rounded-lg shadow-sm;
+}
+
+/* Form styling enhancements */
+.form-input {
+  @apply block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
+         focus:outline-none focus:ring-primary-500 focus:border-primary-500
+         dark:bg-gray-700 dark:border-gray-600 dark:text-white;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1;
+}
+
+.form-error {
+  @apply mt-1 text-sm text-red-600 dark:text-red-400;
+}
+
+/* Button variants */
+.btn-primary {
+  @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm
+         text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500
+         disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm
+         text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500
+         dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-600
+         disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200;
+}
+
+.btn-danger {
+  @apply inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm
+         text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
+         disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200;
+}
+
+/* Notification styles */
+.notification {
+  @apply fixed top-4 right-4 z-50 max-w-sm w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700
+         transform transition-all duration-300 ease-out;
+}
+
+.notification.entering {
+  @apply translate-x-full opacity-0;
+}
+
+.notification.entered {
+  @apply translate-x-0 opacity-100;
+}
+
+.notification.exiting {
+  @apply translate-x-full opacity-0;
+}
+
+/* Modal and overlay styles */
+.modal-overlay {
+  @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4;
+}
+
+.modal-content {
+  @apply bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-auto;
+}
+
+/* Table styles */
+.table-container {
+  @apply overflow-x-auto shadow ring-1 ring-black ring-opacity-5 rounded-lg;
+}
+
+.table {
+  @apply min-w-full divide-y divide-gray-300 dark:divide-gray-700;
+}
+
+.table-header {
+  @apply bg-gray-50 dark:bg-gray-800;
+}
+
+.table-header-cell {
+  @apply px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider;
+}
+
+.table-row {
+  @apply bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-150;
+}
+
+.table-cell {
+  @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100;
+}
+
+/* Loading spinner */
+.spinner {
+  @apply animate-spin rounded-full border-2 border-gray-300 border-t-primary-600;
+}
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+  .mobile-hide {
+    @apply hidden;
+  }
+  
+  .mobile-full {
+    @apply w-full;
+  }
+}

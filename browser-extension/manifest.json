@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "FakeBuster - Smart Shopping Protection",
+  "version": "1.0.0",
+  "description": "Comprehensive browser extension to detect fraudulent websites, fake reviews, and find valid coupon codes",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "scripting",
+    "alarms",
+    "contextMenus",
+    "declarativeNetRequest",
+    "notifications"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-scripts/main.js"],
+      "css": ["content-scripts/styles.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "FakeBuster"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup/*",
+        "content-scripts/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "malicious_sites",
+        "enabled": true,
+        "path": "rules/malicious-sites.json"
+      }
+    ]
+  }
+}
