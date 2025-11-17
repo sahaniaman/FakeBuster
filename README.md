@@ -94,12 +94,6 @@ FakeBuster uses advanced machine learning models for detecting fake reviews:
 - **Feature Engineering**: Custom feature extraction from review text (see `features.py`)
 - **Model Verification**: Run `verify_models.ps1` or `verify_models.sh` to validate models
 
-## 📚 API Documentation
-
-When running the backend, access the interactive API docs at:
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
-
 ## 🛠️ Development
 
 ### Verify Models
@@ -120,18 +114,13 @@ The project uses environment variables for configuration:
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 🙏 Acknowledgements
+
 
 - XGBoost library for the machine learning models
 - FastAPI for the efficient backend
 - Next.js for the modern frontend
 - Chrome and Firefox for extension support
 
-### 2. Automated Setup
-```bash
-chmod +x build.sh
-./build.sh
-```
 
 ### 2. Manual Setup
 
@@ -156,68 +145,6 @@ npm run dev
 2. Enable "Developer mode"
 3. Click "Load unpacked" and select `extension/` folder
 
-## 🔧 Configuration
-
-
-```
-
-### Firebase Setup
-1. ✅ Firebase project already created: `fakebuster-71943`
-2. ✅ Configuration keys integrated in environment files
-3. Enable Authentication in Firebase Console
-4. Enable Firestore Database in Firebase Console
-5. Download admin SDK JSON for backend and place in `backend/firebase-admin-sdk.json`
-
-### Firebase Services Used
-- **Authentication**: User login and registration
-- **Firestore Database**: Store review analyses, threat detections, user activity
-- **Analytics**: Track extension usage and security events
-- **Storage**: Store ML models and user data (optional)
-
-## 🤖 ML Model Integration
-
-### Training Your Model
-```python
-# Example training script (add to backend/train_model.py)
-import pandas as pd
-import numpy as np
-from xgboost import XGBClassifier
-import joblib
-
-# Load and prepare your review dataset
-df = pd.read_csv('reviews_dataset.csv')
-
-# Feature extraction function
-def extract_features(texts):
-    features = []
-    for text in texts:
-        # Extract features from text
-        features.append([
-            len(text),                                     # text length
-            len(text.split()),                            # word count
-            sum(len(w) for w in text.split())/max(len(text.split()), 1),  # avg word length
-            sum(1 for c in text if c.isupper())/max(len(text), 1),  # uppercase ratio
-            sum(1 for c in text if c.isdigit())/max(len(text), 1),  # digit ratio
-            text.count('!'),                              # exclamation count
-            text.count('?'),                              # question count
-            1 if '@' in text else 0,                      # has email
-            1 if 'http' in text else 0                    # has url
-        ])
-    return np.array(features)
-
-# Extract features and prepare data
-X = extract_features(df['review_text'])
-y = df['is_fake']
-processed_data = {'features': X, 'labels': y}
-
-# Train XGBoost model
-model = XGBClassifier(n_estimators=200, max_depth=5, learning_rate=0.1)
-model.fit(X, y)
-
-# Save model and processed data
-joblib.dump(model, 'models/xgboost_model.pkl')
-joblib.dump(processed_data, 'models/processed_reviews.pkl')
-```
 
 ### Model Files Required
 - `backend/models/xgboost_model.pkl` - XGBoost classification model 
@@ -273,23 +200,6 @@ joblib.dump(processed_data, 'models/processed_reviews.pkl')
 - Data synchronization
 - Browser event handling
 
-## 🐳 Docker Deployment
-
-### Development
-```bash
-docker-compose up -d
-```
-
-### Production
-```bash
-docker-compose -f docker-compose.prod.yml up -d
-```
-
-Services:
-- Frontend: http://localhost:3000
-- Backend: http://localhost:8000
-- Firebase: Cloud-hosted database and auth
-- Cache: Redis on port 6379 (optional)
 
 ## 🧪 Testing
 
@@ -385,45 +295,6 @@ npm test
 4. Add tests
 5. Submit pull request
 
-## 📄 License
-
-MIT License - see LICENSE file for details
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-#### Extension Not Loading
-- Check manifest.json syntax
-- Verify permissions
-- Check console errors
-
-#### API Connection Failed
-- Verify backend is running
-- Check CORS settings
-- Confirm environment variables
-
-#### ML Model Not Found
-- Ensure model files exist in `backend/models/`
-- Check file permissions
-- Verify model format
-
-### Support
-- Create GitHub issues for bugs
-- Check documentation for guides
-- Join community discussions
-
-## 🚀 Deployment Checklist
-
-- [ ] Environment variables configured
-- [ ] ML models trained and saved
-- [ ] Firebase project setup
-- [ ] Database migrations run
-- [ ] SSL certificates installed
-- [ ] Domain DNS configured
-- [ ] Extension store submission
-- [ ] Analytics configured
-- [ ] Monitoring setup
 
 ---
 
