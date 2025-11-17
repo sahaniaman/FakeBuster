@@ -158,26 +158,7 @@ npm run dev
 
 ## 🔧 Configuration
 
-### Environment Variables
 
-#### Backend (.env)
-```env
-FIREBASE_ADMIN_SDK_PATH=path/to/firebase-admin-sdk.json
-FIREBASE_PROJECT_ID=fakebuster-71943
-REDIS_URL=redis://localhost:6379
-ML_MODEL_PATH=models/xgboost_model.pkl
-```
-
-#### Frontend (.env.local)
-```env
-NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyCXHmc1EYmN89MCzMU7lsOp_lVuoQ774YI
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=fakebuster-71943.firebaseapp.com
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=fakebuster-71943
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=fakebuster-71943.firebasestorage.app
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=428789568345
-NEXT_PUBLIC_FIREBASE_APP_ID=1:428789568345:web:f95ee1874c268a3330f248
-NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-G0XX58Z5LM
-NEXT_PUBLIC_API_URL=http://localhost:8000
 ```
 
 ### Firebase Setup
