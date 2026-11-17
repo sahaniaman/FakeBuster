@@ -96,9 +96,27 @@ FakeBuster/
    browser-extension/
    ```
 
-3. Install dependencies using the relevant package or dependency files in each component.
+3. Install and start the FastAPI backend:
 
-4. Start the backend service before starting the frontend or browser extension.
+   ~~~bash
+   cd backend
+   python -m venv .venv
+   # Activate the virtual environment for your shell.
+   pip install -r requirements.txt
+   uvicorn app.main:app --reload --port 8000
+   ~~~
+
+4. Install and start the Next.js frontend in another terminal:
+
+   ~~~bash
+   cd frontend
+   npm ci
+   npm run dev
+   ~~~
+
+   The backend expects Firebase Admin credentials (service-account file via `FIREBASE_ADMIN_SDK_PATH` or Application Default Credentials) for authenticated API routes. Protected endpoints require a valid Firebase ID bearer token; requests are rejected when verification is unavailable or fails.
+
+   **Model limitation:** `backend/app/main.py` references `models/xgboost_model.pkl` and `models/processed_reviews.pkl`, but these artifacts are not committed here. The backend may use rule-based fallback behavior; do not interpret fallback scores as validated ML predictions.
 
 5. If the browser extension includes a valid extension manifest:
 
@@ -200,7 +218,7 @@ Before opening a pull request:
 
 ## Roadmap
 
-- [ ] Add reproducible backend and frontend setup instructions
+- [x] Document basic backend and frontend launch commands (service configuration still required)
 - [ ] Add `.env.example` without secrets
 - [ ] Add API schema validation
 - [ ] Add automated unit and API tests
