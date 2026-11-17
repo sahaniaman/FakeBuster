@@ -357,12 +357,22 @@ def analyze_website_legitimacy(data: Dict[str, Any]) -> Dict[str, Any]:
 # ============================================================================
 
 async def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Verify JWT token (implement your Firebase Auth verification here)"""
+    """Require a valid Firebase ID token for authenticated endpoints."""
+    if not FIREBASE_AVAILABLE:
+        raise HTTPException(status_code=503, detail="Authentication service unavailable")
+
     try:
-        # TODO: Implement Firebase Auth token verification
-        # For now, we'll allow all requests
-        return {"user_id": "anonymous"}
-    except Exception as e:
+        firebase_admin.get_app()
+    except ValueError:
+        raise HTTPException(status_code=503, detail="Authentication service unavailable")
+
+    try:
+        decoded = firebase_auth.verify_id_token(credentials.credentials, check_revoked=True)
+        return {"user_id": decoded["uid"]}
+    except (ValueError, KeyError):
+        raise HTTPException(status_code=401, detail="Invalid token")
+    except Exception as exc:
+        logger.warning("Firebase token verification failed: %s", type(exc).__name__)
         raise HTTPException(status_code=401, detail="Invalid token")
 
 # ============================================================================
